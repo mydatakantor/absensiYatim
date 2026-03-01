@@ -444,11 +444,11 @@
         html5QrcodeScanner.render(
             (txt) => {
                 // Ketika QR Code berhasil terbaca
-                
+                stopScanner();
                 // 🔥 Ambil tipe yang sedang aktif
                 const tipe = document.querySelector('input[name="scanType"]:checked').value;
                 submitAbsen(txt,tipe);
-                stopScanner();
+                
             },
             (err) => {
                 // Abaikan log error pembacaan frame per detik
@@ -464,7 +464,7 @@
         }
     }
 
-    async function submitAbsen(nomorHp, tipe) {
+    function submitAbsen(nomorHp, tipe) {
         const response = await fetch(API + "?action=absen", {
             method: "POST",
             body: JSON.stringify({
