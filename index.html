@@ -245,7 +245,7 @@
     let appData = { anakYatim: [], absensi: [], settings: {}, today: '' };
     let currentUser = null;
     let html5QrcodeScanner = null;
-    const API = "https://script.google.com/macros/s/AKfycbzv4fc9wck_i_iHG4iYdh4nY_WpSg9Lv9RxMGK3CwCL0lrefuKuIvpqf6K1n6w-wOzI/exec";
+    const API = "https://script.google.com/macros/s/AKfycbxehfGzXoWsgclvllgdCHawj50uDMQiida_U5yDLUox3Wye3Y5OT9_2DxYZmoTimHRh/exec";
 
 
     // --- INISIALISASI ---
@@ -444,7 +444,7 @@
         html5QrcodeScanner.render(
             (txt) => {
                 // Ketika QR Code berhasil terbaca
-                stopScanner();
+                //stopScanner();
                 // 🔥 Ambil tipe yang sedang aktif
                 const tipe = document.querySelector('input[name="scanType"]:checked').value;
                 submitAbsen(txt,tipe);
