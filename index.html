@@ -467,6 +467,9 @@
     async function submitAbsen(nomorHp, tipe) {
         const response = await fetch(API + "?action=absen", {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
               nomorHp: nomorHp,
               tipe: tipe
