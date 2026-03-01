@@ -464,7 +464,7 @@
         }
     }
 
-    function submitAbsen(nomorHp, tipe) {
+    async function submitAbsen(nomorHp, tipe) {
         const response = await fetch(API + "?action=absen", {
             method: "POST",
             body: JSON.stringify({
