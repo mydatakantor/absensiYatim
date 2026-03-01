@@ -420,7 +420,7 @@
 
 
     // --- SCANNER ---
-    function initScanner(tipe) { // tipe = 'masuk' atau 'pulang'
+    function initScanner() {
         const reader = document.getElementById('reader');
         if(!reader) return;
 
@@ -445,6 +445,8 @@
             (txt) => {
                 // Ketika QR Code berhasil terbaca
                 stopScanner();
+                // 🔥 Ambil tipe yang sedang aktif
+                const tipe = document.querySelector('input[name="scanType"]:checked').value;
                 submitAbsen(txt,tipe);
             },
             (err) => {
