@@ -445,7 +445,7 @@
             (txt) => {
                 // Ketika QR Code berhasil terbaca
                 stopScanner();
-                processAbsen(txt);
+                submitAbsen(txt,tipe);
             },
             (err) => {
                 // Abaikan log error pembacaan frame per detik
@@ -466,7 +466,7 @@
 
         try {
             const params = new URLSearchParams({ nomorHp, tipe });
-            const response = await fetch(`${GAS_WEBAPP_URL}?${params.toString()}`);
+            const response = await fetch(`${API}?${params.toString()}`);
             const res = await response.json();
 
             endLoading();
