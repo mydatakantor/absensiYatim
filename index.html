@@ -458,9 +458,10 @@
                         initScanner(); // 🔥 Aktifkan scanner lagi
                     });
                 } catch (err) {
+                    console.error("FETCH ERROR:", err);
                     Swal.fire({
                         title: 'Error',
-                        text: 'Gagal koneksi ke server',
+                        text: err.message,
                         icon: 'error',
                         confirmButtonText: 'Scan Lagi'
                     }).then(() => {
