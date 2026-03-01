@@ -184,7 +184,7 @@
             <div class="row g-3">
                 <div class="col-md-3"><label class="small fw-bold">Tipe</label><select id="rekapType" class="form-select" onchange="toggleRekapFilter()"><option value="harian">Harian</option><option value="bulanan">Bulanan</option></select></div>
                 <div class="col-md-3"><label class="small fw-bold">Filter Data</label><select id="rekapNomorHp" class="form-select"></select></div>
-                <div class="col-md-3" id="monthFilterContainer" style="display:none;"><label class="small fw-bold">Bulan</label><input type="month" id="rekapMonth" class="form-control"></div>
+                <div class="col-md-3" id="monthFilterContainer" style="display:none;"><label class="small fw-bold">Bulan</label><select type="month" id="rekapMonth" class="form-select"></select></div>
                 <div class="col-md-3 d-flex align-items-end"><button class="btn btn-danger w-100 fw-bold" onclick="renderRekapTable()">CARI</button></div>
             </div>
         </div>
@@ -402,6 +402,8 @@
             updateBranding();
             renderDashboard();
             populateFilters();
+            populateMonthDropdown();
+            renderRekapTable();
         })
         .catch(err => {
             endLoading();
@@ -671,6 +673,35 @@
         let html = '';
         filtered.forEach(a => { html += `<tr><td>${a.tanggal}</td><td>${a.nomor_hp}</td><td class="text-start">${a.nama}</td><td>${a.waktu_masuk}</td><td>${a.waktu_pulang}</td><td>${a.status}</td></tr>`; });
         const trekap = document.getElementById('tableRekap'); if(trekap) trekap.innerHTML = html || '<tr><td colspan="6" class="py-4">Tidak ada data ditemukan</td></tr>';
+    }
+
+    function populateMonthDropdown() {
+
+        const select = document.getElementById('rekapMonth');
+        if (!select) return;
+
+        const months = new Set();
+
+        appData.absensi.forEach(a => {
+            // Ambil YYYY-MM dari tanggal
+            if (a.tanggal) {
+                months.add(a.tanggal.substring(0, 7));
+            }
+        });
+
+        const sortedMonths = Array.from(months).sort().reverse();
+
+        let options = '<option value="">-- Pilih Bulan --</option>';
+
+        sortedMonths.forEach(m => {
+            const [year, month] = m.split("-");
+            const date = new Date(year, month - 1);
+            const monthName = date.toLocaleString("id-ID", { month: "long" });
+
+            options += `<option value="${m}">${monthName} ${year}</option>`;
+        });
+
+        select.innerHTML = options;
     }
 
 
