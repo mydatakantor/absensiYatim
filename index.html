@@ -442,12 +442,31 @@
 
 
         html5QrcodeScanner.render(
-            (txt) => {
+           async (txt) => {
                 // Ketika QR Code berhasil terbaca
                 stopScanner();
                 // 🔥 Ambil tipe yang sedang aktif
                 const tipe = document.querySelector('input[name="scanType"]:checked').value;
-                submitAbsen(txt,tipe);
+                try {
+                    const result = await submitAbsen(txt,tipe);
+                    Swal.fire({
+                      title: result.success ? 'Berhasil' : 'Gagal',
+                      text: result.message,
+                      icon: result.success ? 'success' : 'error',
+                      confirmButtonText: 'Scan Lagi'
+                    }).then(() => {
+                        initScanner(); // 🔥 Aktifkan scanner lagi
+                    });
+                } catch (err) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Gagal koneksi ke server',
+                        icon: 'error',
+                        confirmButtonText: 'Scan Lagi'
+                    }).then(() => {
+                        initScanner();
+                    });
+                }
                 
             },
             (err) => {
